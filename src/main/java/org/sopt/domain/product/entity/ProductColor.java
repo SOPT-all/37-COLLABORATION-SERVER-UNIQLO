@@ -14,4 +14,11 @@ public class ProductColor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Product product;
+
+    private String colorCode;
+
+    private String colorName;
 }

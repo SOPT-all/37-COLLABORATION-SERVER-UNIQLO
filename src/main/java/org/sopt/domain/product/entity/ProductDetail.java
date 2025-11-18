@@ -1,7 +1,6 @@
 package org.sopt.domain.product.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -12,4 +11,25 @@ import lombok.*;
 @Table(name = "product_detail")
 public class ProductDetail {
 
+    @Id
+    private Long id;
+
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY)
+    private Product product;
+
+    @Column(nullable = false)
+    private String detailImageUrl;
+
+    @Column(nullable = false)
+    private String detailText;
+
+    @Column(nullable = false)
+    private String descriptionText;
+
+    @Column(nullable = false)
+    private String featureDetailText;
+
+    @Column(nullable = false)
+    private String sizeDetailText;
 }
