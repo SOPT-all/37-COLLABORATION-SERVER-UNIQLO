@@ -20,7 +20,7 @@ public record ProductInfoResponse(
         String name,
         String originPrice,
         String salePrice,
-        float star
+        float starAverage
 ) {
     public static ProductInfoResponse of(
             Product product,
@@ -48,7 +48,7 @@ public record ProductInfoResponse(
                 .name(product.getName())
                 .originPrice(product.getOriginPrice())
                 .salePrice(product.getSalePrice())
-                .star(product.getStarAverage())
+                .starAverage(product.getStarAverage())
                 .build();
     }
 }
