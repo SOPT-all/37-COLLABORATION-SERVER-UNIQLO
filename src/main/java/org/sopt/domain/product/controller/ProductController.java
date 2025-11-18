@@ -1,6 +1,7 @@
 package org.sopt.domain.product.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.sopt.domain.product.controller.docs.ProductControllerDocs;
 import org.sopt.domain.product.dto.ProductInfoResponse;
 import org.sopt.domain.product.dto.ProductResponse;
 import org.sopt.domain.product.service.ProductService;
@@ -15,7 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 @RequiredArgsConstructor
-public class ProductController {
+public class ProductController implements ProductControllerDocs {
+
     private final ProductService productService;
 
     /**
