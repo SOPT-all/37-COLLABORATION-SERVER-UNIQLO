@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum Gender {
-    MALE("MEN"),
-    FEMALE("WOMEN");
+public enum ProductType {
+    ONLINE("온라인단독"),
+    OFFLINE("일부매장제품");
 
     private final String displayName;
 }
