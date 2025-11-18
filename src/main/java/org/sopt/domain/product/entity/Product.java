@@ -3,10 +3,6 @@ package org.sopt.domain.product.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -42,24 +38,6 @@ public class Product {
 
     @Column(nullable = false)
     private int reviewCount;
-
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Builder.Default
-    private List<ProductImage> productImages = new ArrayList<>();
-
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Builder.Default
-    private List<ProductColor> productColors = new ArrayList<>();
-
-    public String getMainImageUrl() {
-        return productImages.isEmpty() ? null : productImages.get(0).getProductImageUrl();
-    }
-
-    public List<String> getColorCodes() {
-        return productColors.stream()
-                .map(ProductColor::getColorCode)
-                .collect(Collectors.toList());
-    }
 
     // 도메인 로직: 성별과 사이즈 범위 조합 반환
     public String getGenderAndSizeRange() {
