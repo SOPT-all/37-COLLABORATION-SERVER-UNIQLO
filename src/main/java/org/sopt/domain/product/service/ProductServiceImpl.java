@@ -1,6 +1,7 @@
 package org.sopt.domain.product.service;
 
 import lombok.RequiredArgsConstructor;
+import org.sopt.domain.product.dto.ProductInfoResponse;
 import org.sopt.domain.product.dto.ProductResponse;
 import org.sopt.domain.product.entity.Product;
 import org.sopt.domain.product.entity.ProductColor;
@@ -8,6 +9,8 @@ import org.sopt.domain.product.entity.ProductImage;
 import org.sopt.domain.product.repository.ProductColorRepository;
 import org.sopt.domain.product.repository.ProductImageRepository;
 import org.sopt.domain.product.repository.ProductRepository;
+import org.sopt.global.api.ErrorCode;
+import org.sopt.global.api.GeneralException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +31,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponse> getAllProducts() {
         List<Product> products = productRepository.findAllProducts();
-
         if (products.isEmpty()) {
             return Collections.emptyList();
         }
@@ -54,6 +56,17 @@ public class ProductServiceImpl implements ProductService {
                         colorsByProductId.getOrDefault(product.getId(), Collections.emptyList())
                 ))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductInfoResponse getProductInfo(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new GeneralException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        List<ProductImage> images = productImageRepository.findAllByProductId(productId);
+        List<ProductColor> colors = productColorRepository.findAllByProductId(productId);
+
+        return ProductInfoResponse.of(product, images, colors);
     }
 
 }

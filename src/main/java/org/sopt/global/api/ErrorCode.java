@@ -23,6 +23,9 @@ public enum ErrorCode {
      */
     NOT_FOUND_URL(HttpStatus.NOT_FOUND, 40400, "지원하지 않는 URL입니다."),
 
+    // 상품을 찾지 못했을 때
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, 40401, "상품을 찾을 수 업습니다."),
+
 
     /**
      * 405 METHOD_NOT_ALLOWED
@@ -38,7 +41,7 @@ public enum ErrorCode {
      * 500 INTERNAL_SERVER_ERROR
      */
     // DB 제약조건 위반 에러
-    DB_CONSTRAINT_VIOLATION(HttpStatus.INTERNAL_SERVER_ERROR, 50018, "DB 제약조건 문제 발생, 서버 개발자에게 문의해주세요"),;
+    DB_CONSTRAINT_VIOLATION(HttpStatus.INTERNAL_SERVER_ERROR, 50018, "DB 제약조건 문제 발생, 서버 개발자에게 문의해주세요");
 
 
     private final HttpStatus status;
