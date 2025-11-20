@@ -41,7 +41,7 @@ public class Product {
 
     // 도메인 로직: 성별과 사이즈 범위 조합 반환
     public String getGenderAndSizeRange() {
-        return gender.getDisplayName() + ", " + sizeRange;
+        return gender.getDisplayNameEng() + ", " + sizeRange;
     }
 
     // 도메인 로직: 상품 타입 한글명 반환
