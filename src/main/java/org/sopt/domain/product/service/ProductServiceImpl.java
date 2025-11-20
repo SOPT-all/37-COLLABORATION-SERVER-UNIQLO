@@ -4,12 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.sopt.domain.product.dto.ProductInfoResponse;
 import org.sopt.domain.product.dto.ProductResponse;
 import org.sopt.domain.product.dto.ProductSummaryResponse;
+import org.sopt.domain.product.dto.StyleHintImageResponse;
 import org.sopt.domain.product.entity.Product;
 import org.sopt.domain.product.entity.ProductColor;
 import org.sopt.domain.product.entity.ProductImage;
 import org.sopt.domain.product.repository.ProductColorRepository;
 import org.sopt.domain.product.repository.ProductImageRepository;
 import org.sopt.domain.product.repository.ProductRepository;
+import org.sopt.domain.styleHint.entity.ProductStyleHint;
+import org.sopt.domain.styleHint.repository.ProductStyleHintRepository;
 import org.sopt.global.api.ErrorCode;
 import org.sopt.global.api.GeneralException;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
     private final ProductColorRepository productColorRepository;
+    private final ProductStyleHintRepository productStyleHintRepository;
 
     @Override
     public List<ProductResponse> getAllProducts() {
@@ -85,5 +89,14 @@ public class ProductServiceImpl implements ProductService {
 
         // 4. DTO로 변환 후 반환
         return ProductSummaryResponse.from(product, images, colors);
+    }
+
+    @Override
+    public StyleHintImageResponse getProductHintImage(Long productId) {
+        // 페치조인으로 N+1 제거
+        List<ProductStyleHint> hints =
+                productStyleHintRepository.findByProductIdFetchJoin(productId);
+
+        return StyleHintImageResponse.from(hints);
     }
 }
