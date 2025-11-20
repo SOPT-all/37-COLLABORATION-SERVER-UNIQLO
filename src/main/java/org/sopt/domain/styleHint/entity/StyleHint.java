@@ -14,4 +14,7 @@ public class StyleHint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private String styleHintImageUrl;
 }
