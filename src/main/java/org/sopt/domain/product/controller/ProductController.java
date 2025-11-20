@@ -38,8 +38,8 @@ public class ProductController implements ProductControllerDocs {
     }
 
     @GetMapping("/{productId}/details")
-    public ApiResponse<ProductSummaryResponse> getProductDetailById(@PathVariable("productId") Long productId) {
-        ProductSummaryResponse response = productService.getProductDetail(productId);
+    public ApiResponse<ProductDetailResponse> getProductDetail(@PathVariable("productId") Long productId) {
+        ProductDetailResponse response = productService.getProductDetail(productId);
         return ApiResponse.ok(response);
     }
 
