@@ -2,6 +2,7 @@ package org.sopt.domain.product.dto;
 
 import org.sopt.domain.review.entity.Review;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public record ReviewListResponse(
@@ -29,6 +30,9 @@ public record ReviewListResponse(
             String fit
     ) {
 
+        private static final DateTimeFormatter DATE_FORMATTER =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         public static ReviewSummary from(Review review) {
 
             String height = (review.getHeight() == null || review.getHeight().isBlank())
@@ -37,13 +41,18 @@ public record ReviewListResponse(
 
             String gender = (review.getGender() == null)
                     ? "선택하지않음"
-                    : review.getGender().getDisplayNameKr();  // ★ 변경 포인트
+                    : review.getGender().getDisplayNameKr();
+
+            // yyyy-MM-dd 형태로 변환
+            String createdAt = review.getCreatedAt()
+                    .toLocalDate()
+                    .format(DATE_FORMATTER);
 
             return new ReviewSummary(
                     review.getTitle(),
                     review.getContent(),
                     review.getStar(),
-                    review.getCreatedAt().toString(),
+                    createdAt,
                     height,
                     gender,
                     review.getRecommend(),
