@@ -24,7 +24,8 @@ public enum ErrorCode {
     NOT_FOUND_URL(HttpStatus.NOT_FOUND, 40400, "지원하지 않는 URL입니다."),
 
     // 상품을 찾지 못했을 때
-    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, 40401, "상품을 찾을 수 업습니다."),
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, 40401, "상품을 찾을 수 없습니다."),
+    NOT_FOUND_PRODUCT_DETAIL(HttpStatus.NOT_FOUND, 40402, "상품 세부정보를 찾을 수 없습니다."),
 
 
     /**

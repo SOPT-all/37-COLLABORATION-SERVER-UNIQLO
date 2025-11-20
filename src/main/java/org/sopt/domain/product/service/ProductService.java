@@ -16,9 +16,9 @@ public interface ProductService {
      */
     ProductInfoResponse getProductInfo(Long productId);
 
-    ProductSummaryResponse getProductDetail(Long productId);
-
     StyleHintImageResponse getProductHintImage(Long productId);
 
     ReviewListResponse getProductReviews(Long productId);
+
+    ProductDetailResponse getProductDetail(Long productId);
 }

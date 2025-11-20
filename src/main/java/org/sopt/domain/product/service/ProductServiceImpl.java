@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.sopt.domain.product.dto.*;
 import org.sopt.domain.product.entity.Product;
 import org.sopt.domain.product.entity.ProductColor;
+import org.sopt.domain.product.entity.ProductDetail;
 import org.sopt.domain.product.entity.ProductImage;
 import org.sopt.domain.product.repository.ProductColorRepository;
+import org.sopt.domain.product.repository.ProductDetailRepository;
 import org.sopt.domain.product.repository.ProductImageRepository;
 import org.sopt.domain.product.repository.ProductRepository;
 import org.sopt.domain.review.entity.Review;
@@ -32,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductColorRepository productColorRepository;
     private final ProductStyleHintRepository productStyleHintRepository;
     private final ReviewRepository reviewRepository;
+    private final ProductDetailRepository productDetailRepository;
 
     @Override
     public List<ProductResponse> getAllProducts() {
@@ -75,24 +78,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductSummaryResponse getProductDetail(Long productId) {
+    public StyleHintImageResponse getProductHintImage(Long productId) {
 
-        // 1. 상품 조회 (존재하지 않으면 예외 발생)
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new GeneralException(ErrorCode.PRODUCT_NOT_FOUND));
 
-        // 2. 해당 상품 이미지 조회
-        List<ProductImage> images = productImageRepository.findByProductId(productId);
-
-        // 3. 해당 상품 색상 조회
-        List<ProductColor> colors = productColorRepository.findByProductId(productId);
-
-        // 4. DTO로 변환 후 반환
-        return ProductSummaryResponse.from(product, images, colors);
-    }
-
-    @Override
-    public StyleHintImageResponse getProductHintImage(Long productId) {
         // 페치조인으로 N+1 제거
         List<ProductStyleHint> hints =
                 productStyleHintRepository.findByProductIdFetchJoin(productId);
@@ -109,5 +99,14 @@ public class ProductServiceImpl implements ProductService {
         List<Review> reviews = reviewRepository.findByProductId(productId);
 
         return ReviewListResponse.from(reviews);
+    }
+
+    @Override
+    public ProductDetailResponse getProductDetail(Long productId) {
+
+        ProductDetail productDetail = productDetailRepository.findById(productId)
+                .orElseThrow(() -> new GeneralException(ErrorCode.NOT_FOUND_PRODUCT_DETAIL));
+
+        return ProductDetailResponse.from(productDetail);
     }
 }
