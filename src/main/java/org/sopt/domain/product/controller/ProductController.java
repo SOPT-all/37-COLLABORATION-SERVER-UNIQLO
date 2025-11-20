@@ -5,6 +5,7 @@ import org.sopt.domain.product.controller.docs.ProductControllerDocs;
 import org.sopt.domain.product.dto.ProductInfoResponse;
 import org.sopt.domain.product.dto.ProductResponse;
 import org.sopt.domain.product.dto.ProductSummaryResponse;
+import org.sopt.domain.product.dto.StyleHintImageResponse;
 import org.sopt.domain.product.service.ProductService;
 import org.sopt.global.api.ApiResponse;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,12 @@ public class ProductController implements ProductControllerDocs {
     @GetMapping("/{productId}/details")
     public ApiResponse<ProductSummaryResponse> getProductDetailById(@PathVariable("productId") Long productId) {
         ProductSummaryResponse response = productService.getProductDetail(productId);
+        return ApiResponse.ok(response);
+    }
+
+    @GetMapping("/{productId}/hints")
+    public ApiResponse<StyleHintImageResponse> getProductHintImage(@PathVariable("productId") Long productId) {
+        StyleHintImageResponse response = productService.getProductHintImage(productId);
         return ApiResponse.ok(response);
     }
 }
