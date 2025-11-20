@@ -28,7 +28,7 @@ public record ProductResponse(
         String mainImageUrl = images.isEmpty() ? null : images.get(0).getProductImageUrl();
         List<String> colorCodes = colors.stream()
                 .map(ProductColor::getColorCode)
-                .collect(Collectors.toList());
+                .toList();
 
         return ProductResponse.builder()
                 .productImageUrl(mainImageUrl)

@@ -31,7 +31,7 @@ public record ProductInfoResponse(
 
         List<String> colorCodes = colors.stream()
                 .map(ProductColor::getColorCode)
-                .collect(Collectors.toList());
+                .toList();
 
         Map<String, String> colorMap = colors.stream()
                 .collect(Collectors.toMap(
