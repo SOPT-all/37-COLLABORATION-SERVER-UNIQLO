@@ -3,6 +3,7 @@ package org.sopt.domain.product.service;
 import lombok.RequiredArgsConstructor;
 import org.sopt.domain.product.dto.ProductInfoResponse;
 import org.sopt.domain.product.dto.ProductResponse;
+import org.sopt.domain.product.dto.ProductSummaryResponse;
 import org.sopt.domain.product.entity.Product;
 import org.sopt.domain.product.entity.ProductColor;
 import org.sopt.domain.product.entity.ProductImage;
@@ -69,4 +70,20 @@ public class ProductServiceImpl implements ProductService {
         return ProductInfoResponse.of(product, images, colors);
     }
 
+    @Override
+    public ProductSummaryResponse getProductDetail(Long productId) {
+
+        // 1. 상품 조회 (존재하지 않으면 예외 발생)
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new GeneralException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        // 2. 해당 상품 이미지 조회
+        List<ProductImage> images = productImageRepository.findByProductId(productId);
+
+        // 3. 해당 상품 색상 조회
+        List<ProductColor> colors = productColorRepository.findByProductId(productId);
+
+        // 4. DTO로 변환 후 반환
+        return ProductSummaryResponse.from(product, images, colors);
+    }
 }
