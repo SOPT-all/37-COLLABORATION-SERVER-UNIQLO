@@ -1,9 +1,6 @@
 package org.sopt.domain.product.service;
 
-import org.sopt.domain.product.dto.ProductInfoResponse;
-import org.sopt.domain.product.dto.ProductResponse;
-import org.sopt.domain.product.dto.ProductSummaryResponse;
-import org.sopt.domain.product.dto.StyleHintImageResponse;
+import org.sopt.domain.product.dto.*;
 
 import java.util.List;
 
@@ -22,4 +19,6 @@ public interface ProductService {
     ProductSummaryResponse getProductDetail(Long productId);
 
     StyleHintImageResponse getProductHintImage(Long productId);
+
+    ReviewListResponse getProductReviews(Long productId);
 }
