@@ -2,13 +2,9 @@ package org.sopt.domain.product.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.sopt.domain.product.controller.docs.ProductControllerDocs;
-import org.sopt.domain.product.dto.ProductInfoResponse;
-import org.sopt.domain.product.dto.ProductResponse;
-import org.sopt.domain.product.dto.ProductSummaryResponse;
-import org.sopt.domain.product.dto.StyleHintImageResponse;
+import org.sopt.domain.product.dto.*;
 import org.sopt.domain.product.service.ProductService;
 import org.sopt.global.api.ApiResponse;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +46,12 @@ public class ProductController implements ProductControllerDocs {
     @GetMapping("/{productId}/hints")
     public ApiResponse<StyleHintImageResponse> getProductHintImage(@PathVariable("productId") Long productId) {
         StyleHintImageResponse response = productService.getProductHintImage(productId);
+        return ApiResponse.ok(response);
+    }
+
+    @GetMapping("/{productId}/reviews")
+    public ApiResponse<ReviewListResponse> getProductReviews(@PathVariable("productId") Long productId) {
+        ReviewListResponse response = productService.getProductReviews(productId);
         return ApiResponse.ok(response);
     }
 }

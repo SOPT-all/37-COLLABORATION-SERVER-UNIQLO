@@ -1,16 +1,15 @@
 package org.sopt.domain.product.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.domain.product.dto.ProductInfoResponse;
-import org.sopt.domain.product.dto.ProductResponse;
-import org.sopt.domain.product.dto.ProductSummaryResponse;
-import org.sopt.domain.product.dto.StyleHintImageResponse;
+import org.sopt.domain.product.dto.*;
 import org.sopt.domain.product.entity.Product;
 import org.sopt.domain.product.entity.ProductColor;
 import org.sopt.domain.product.entity.ProductImage;
 import org.sopt.domain.product.repository.ProductColorRepository;
 import org.sopt.domain.product.repository.ProductImageRepository;
 import org.sopt.domain.product.repository.ProductRepository;
+import org.sopt.domain.review.entity.Review;
+import org.sopt.domain.review.repository.ReviewRepository;
 import org.sopt.domain.styleHint.entity.ProductStyleHint;
 import org.sopt.domain.styleHint.repository.ProductStyleHintRepository;
 import org.sopt.global.api.ErrorCode;
@@ -32,6 +31,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductImageRepository productImageRepository;
     private final ProductColorRepository productColorRepository;
     private final ProductStyleHintRepository productStyleHintRepository;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public List<ProductResponse> getAllProducts() {
@@ -98,5 +98,16 @@ public class ProductServiceImpl implements ProductService {
                 productStyleHintRepository.findByProductIdFetchJoin(productId);
 
         return StyleHintImageResponse.from(hints);
+    }
+
+    @Override
+    public ReviewListResponse getProductReviews(Long productId) {
+
+        productRepository.findById(productId)
+                .orElseThrow(() -> new GeneralException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        List<Review> reviews = reviewRepository.findByProductId(productId);
+
+        return ReviewListResponse.from(reviews);
     }
 }
