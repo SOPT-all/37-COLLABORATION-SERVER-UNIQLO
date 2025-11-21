@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 @Builder
 public record ProductResponse(
+        Long productId,
         String productImageUrl,
         List<String> colorCode,
         String genderAndSizeRange,
@@ -31,6 +32,7 @@ public record ProductResponse(
                 .toList();
 
         return ProductResponse.builder()
+                .productId(product.getId())
                 .productImageUrl(mainImageUrl)
                 .colorCode(colorCodes)
                 .genderAndSizeRange(product.getGenderAndSizeRange())
