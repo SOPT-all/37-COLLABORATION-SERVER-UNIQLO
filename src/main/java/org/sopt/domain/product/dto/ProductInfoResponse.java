@@ -14,20 +14,23 @@ import java.util.stream.Collectors;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record ProductInfoResponse(
         String productId,
-        String productImageUrl,
+        List<String> productImageUrl,
         List<String> colorCode,
         Map<String, String> color,
         String name,
         String originPrice,
         String salePrice,
-        float starAverage
+        float starAverage,
+        int reviewCount
 ) {
     public static ProductInfoResponse of(
             Product product,
             List<ProductImage> images,
             List<ProductColor> colors
     ) {
-        String mainImageUrl = images.isEmpty() ? null : images.get(0).getProductImageUrl();
+        List<String> mainImageUrl = images.isEmpty() ? null : images.stream()
+                                                        .map(ProductImage::getProductImageUrl)
+                                                        .toList();
 
         List<String> colorCodes = colors.stream()
                 .map(ProductColor::getColorCode)
@@ -49,6 +52,7 @@ public record ProductInfoResponse(
                 .originPrice(product.getOriginPrice())
                 .salePrice(product.getSalePrice())
                 .starAverage(product.getStarAverage())
+                .reviewCount(product.getReviewCount())
                 .build();
     }
 }
