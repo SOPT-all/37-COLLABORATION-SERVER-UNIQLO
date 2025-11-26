@@ -43,14 +43,6 @@ public record ReviewListResponse(
                     ? "선택하지않음"
                     : review.getGender().getDisplayNameKr();
 
-            if (review.getId() == 3L) {
-                gender += " 50대";
-            }
-
-            if (review.getId() == 4L) {
-                gender += " 30대";
-            }
-
             // yyyy-MM-dd 형태로 변환
             String createdAt = review.getCreatedAt()
                     .toLocalDate()
